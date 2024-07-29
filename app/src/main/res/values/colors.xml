@@ -2,4 +2,18 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <!-- Primary brand color. -->
+    <color name="primary">#0D6EFD</color>
+    <color name="primary_dark">#004B87</color>
+    <color name="primary_light">#6AB4FF</color>
+    <color name="secondary">#FF6F20</color>
+    <color name="secondary_dark">#C94A00</color>
+    <color name="secondary_light">#FF9E6B</color>
+    <color name="accent">#FFD600</color>
+<!--    <color name="primary_variant">@color/primary_variant</color>-->
+<!--    <color name="on_primary">@color/on_primary</color>-->
+<!--    &lt;!&ndash; Secondary brand color. &ndash;&gt;-->
+<!--    <color name="secondary">@color/secondary</color>-->
+<!--    <color name="secondary_variant">@color/secondary_variant</color>-->
+<!--    <color name="on_secondary">@color/on_secondary</color>-->
 </resources>

@@ -43,4 +43,19 @@
         libero vel nunc consequat, quis tincidunt nisl eleifend. Cras bibendum enim a justo luctus
         vestibulum. Fusce dictum libero quis erat maximus, vitae volutpat diam dignissim.
     </string>
+    <string name="title_activity_add_user">AddUserActivity</string>
+    <string name="prompt_email">Email</string>
+    <string name="prompt_firstname">First Name</string>
+    <string name="prompt_lastname">Last Name</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_add_user">Add</string>
+    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="welcome">"Welcome !"</string>
+    <string name="invalid_email">Not a valid email</string>
+    <string name="invalid_firstname">Not a valid first name</string>
+    <string name="invalid_lastname">Not a valid last name</string>
+    <string name="invalid_password">Password must be >5 characters</string>
+    <string name="adding_user_failed">"Adding user failed"</string>
+    <string name="added">"Added"</string>
 </resources>
