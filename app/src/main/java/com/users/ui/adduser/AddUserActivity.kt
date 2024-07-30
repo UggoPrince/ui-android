@@ -11,15 +11,15 @@ import android.view.View
 import android.widget.EditText
 import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
+import com.users.R
 import com.users.databinding.ActivityAddUserBinding
 
-import com.users.R
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class AddUserActivity : AppCompatActivity() {
 
-    private val userViewModel: UserViewModel by viewModel()
+    private val addUserViewModel: AddUserViewModel by viewModel()
     private lateinit var binding: ActivityAddUserBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,9 +36,9 @@ class AddUserActivity : AppCompatActivity() {
         val loading = binding.loading
 
 //        userViewModel = ViewModelProvider(this, UserViewModelFactory())
-//            .get(UserViewModel::class.java)
+//            .get(AddUserViewModel::class.java)
 
-        userViewModel.addUserFormState.observe(this@AddUserActivity, Observer {
+        addUserViewModel.addUserFormState.observe(this@AddUserActivity, Observer {
             val addUserState = it ?: return@Observer
 
             // disable login button unless both username / password is valid
@@ -56,7 +56,7 @@ class AddUserActivity : AppCompatActivity() {
             if (addUserState.isDataValid) {
                 // loading.visibility = View.VISIBLE
                 lifecycleScope.launch {
-                    userViewModel.addUser(
+                    addUserViewModel.addUser(
                         email.text.toString(),
                         firstname.text.toString(),
                         lastname.text.toString()
@@ -65,7 +65,7 @@ class AddUserActivity : AppCompatActivity() {
             }
         })
 
-        userViewModel.addUserResult.observe(this@AddUserActivity, Observer {
+        addUserViewModel.addUserResult.observe(this@AddUserActivity, Observer {
             val addingUserResult = it ?: return@Observer
 
             loading.visibility = View.GONE
@@ -82,7 +82,7 @@ class AddUserActivity : AppCompatActivity() {
         })
 
         email.afterTextChanged {
-            userViewModel.addUserDataChanged(
+            addUserViewModel.addUserDataChanged(
                 email.text.toString(),
                 firstname.text.toString(),
                 lastname.text.toString()
@@ -90,7 +90,7 @@ class AddUserActivity : AppCompatActivity() {
         }
         firstname.apply {
             afterTextChanged {
-                userViewModel.addUserDataChanged(
+                addUserViewModel.addUserDataChanged(
                     email.text.toString(),
                     firstname.text.toString(),
                     lastname.text.toString()
@@ -99,7 +99,7 @@ class AddUserActivity : AppCompatActivity() {
         }
         lastname.apply {
             afterTextChanged {
-                userViewModel.addUserDataChanged(
+                addUserViewModel.addUserDataChanged(
                     email.text.toString(),
                     firstname.text.toString(),
                     lastname.text.toString()
@@ -108,7 +108,7 @@ class AddUserActivity : AppCompatActivity() {
         }
         addUserButton.setOnClickListener {
             lifecycleScope.launch {
-                userViewModel.canAddUserCheck(
+                addUserViewModel.canAddUserCheck(
                     email.text.toString(),
                     firstname.text.toString(),
                     lastname.text.toString()

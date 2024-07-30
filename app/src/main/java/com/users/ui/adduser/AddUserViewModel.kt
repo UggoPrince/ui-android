@@ -10,9 +10,10 @@ import com.users.data.Result
 
 import com.users.R
 import com.users.data.UserRepository
+import com.users.ui.UserResult
 import kotlinx.coroutines.launch
 
-class UserViewModel(private val userRepository: UserRepository) : ViewModel() {
+class AddUserViewModel(private val userRepository: UserRepository) : ViewModel() {
 
     private val _addUserForm = MutableLiveData<AddUserFormState>()
     val addUserFormState: LiveData<AddUserFormState> = _addUserForm

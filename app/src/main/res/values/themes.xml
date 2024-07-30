@@ -1,6 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Base.Theme.UserManagment" parent="Theme.Material3.DayNight.NoActionBar">
+    <style name="Base.Theme.UserManagement" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
         <item name="colorPrimary">@color/primary</item>
         <item name="colorPrimaryDark">@color/primary_dark</item>
@@ -9,5 +9,5 @@
         <item name="colorAccent">@color/accent</item>
     </style>
 
-    <style name="Theme.UserManagment" parent="Base.Theme.UserManagment" />
+    <style name="Theme.UserManagement" parent="Base.Theme.UserManagement" />
 </resources>

@@ -16,7 +16,16 @@ class UserDataSource(private val apiService: UserService) {
             val newUser = apiService.addUser(user)
             Result.Success(newUser)
         } catch (e: Throwable) {
-            Result.Error(IOException("Error logging in", e))
+            Result.Error(IOException("Error adding user.", e))
+        }
+    }
+
+    suspend fun getUsers(): Result<List<User>> {
+        return try {
+            val users = apiService.getUsers()
+            Result.Success(users)
+        } catch (e: Throwable) {
+            Result.Error(IOException("Error fetching users.", e))
         }
     }
 }

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">User Managment</string>
+    <string name="app_name">User Management</string>
     <string name="action_settings">Settings</string>
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>
@@ -48,6 +48,7 @@
     <string name="prompt_firstname">First Name</string>
     <string name="prompt_lastname">Last Name</string>
     <string name="prompt_password">Password</string>
+    <string name="users_list">All users.</string>
     <string name="action_add_user">Add</string>
     <string name="action_sign_in">Sign in or register</string>
     <string name="action_sign_in_short">Sign in</string>

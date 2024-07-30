@@ -10,8 +10,8 @@ class UserViewModelFactory : ViewModelProvider.Factory {
 
 //    @Suppress("UNCHECKED_CAST")
 //    override fun <T : ViewModel> create(modelClass: Class<T>): T {
-//        if (modelClass.isAssignableFrom(UserViewModel::class.java)) {
-//            return UserViewModel(
+//        if (modelClass.isAssignableFrom(AddUserViewModel::class.java)) {
+//            return AddUserViewModel(
 //                userRepository = UserRepository(
 //                    // dataSource = UserDataSource()
 //                )

@@ -1,4 +1,6 @@
-package com.users.ui.adduser
+package com.users.ui
+
+import com.users.ui.adduser.AddedUserView
 
 /**
  * Authentication result : success (user details) or error message.
