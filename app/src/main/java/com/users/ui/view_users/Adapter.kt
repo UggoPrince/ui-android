@@ -5,12 +5,14 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
 import android.widget.TextView
+import androidx.appcompat.widget.PopupMenu
 import androidx.recyclerview.widget.RecyclerView
 import com.users.R
 import com.users.data.model.User
 
-class Adapter(private val itemClickListener: (User) -> Unit):
+class Adapter(private val itemClickListener: (User) -> Unit, private val itemDelete: (String) -> Unit ):
     RecyclerView.Adapter<Adapter.UserViewHolder>() {
     private var users = listOf<User>()
 
@@ -22,6 +24,7 @@ class Adapter(private val itemClickListener: (User) -> Unit):
     inner class UserViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val nameView: TextView = itemView.findViewById(R.id.name)
         val emailView: TextView = itemView.findViewById(R.id.userEmail)
+        val optionsButton: ImageButton = itemView.findViewById(R.id.itemOptionsButton)
 
         fun setClickListener(user: User) {
             itemView.setOnClickListener { itemClickListener(user)}
@@ -43,5 +46,22 @@ class Adapter(private val itemClickListener: (User) -> Unit):
         holder.nameView.text = name
         holder.emailView.text = user.email
         holder.setClickListener(user)
+        holder.optionsButton.setOnClickListener { view ->
+            val popup = PopupMenu(view.context, holder.optionsButton)
+            popup.inflate(R.menu.item_menu)
+            popup.setOnMenuItemClickListener { menuItem ->
+                when (menuItem.itemId) {
+                    R.id.action_delete -> {
+                        // Handle delete action
+                        itemDelete(user.id)
+                        true
+                    }
+                    else -> false
+                }
+            }
+            popup.show()
+        }
     }
+
+
 }

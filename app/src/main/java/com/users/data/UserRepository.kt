@@ -1,5 +1,6 @@
 package com.users.data
 
+import com.users.data.model.DeletedUser
 import com.users.data.model.User
 
 class UserRepository(private val dataSource: UserDataSource) {
@@ -19,5 +20,9 @@ class UserRepository(private val dataSource: UserDataSource) {
     suspend fun updateUser(user: User): Result<User> {
         val result = dataSource.updateUser(user)
         return result
+    }
+
+    suspend fun deleteUser(id: String): Result<DeletedUser> {
+        return dataSource.deleteUser(id)
     }
 }

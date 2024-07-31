@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.users.data.Result
 import com.users.data.UserRepository
+import com.users.data.model.DeletedUser
 import com.users.data.model.User
 import kotlinx.coroutines.launch
 
@@ -16,11 +17,17 @@ class UserViewModel(private val userRepository: UserRepository) : ViewModel() {
     private val _user = MutableLiveData<User>()
     val user: LiveData<User> = _user
 
-    private val _errorMessage = MutableLiveData<String>()
-    val errorMessage: LiveData<String> = _errorMessage
+    private val _deletedUser = MutableLiveData<DeletedUser>()
+    val deletedUser: LiveData<DeletedUser> = _deletedUser
+
+    private val _getUsersError = MutableLiveData<String>()
+    val getUsersError: LiveData<String> = _getUsersError
 
     private val _errorMessage2 = MutableLiveData<String>()
     val errorMessage2: LiveData<String> = _errorMessage2
+
+    private val _deleteError = MutableLiveData<String>()
+    val deleteError: LiveData<String> = _deleteError
 
     suspend fun getUsers() {
         viewModelScope.launch {
@@ -30,11 +37,11 @@ class UserViewModel(private val userRepository: UserRepository) : ViewModel() {
                 }
 
                 is Result.Error -> {
-                    _errorMessage.postValue(result.exception.message)
+                    _getUsersError.postValue(result.exception.message)
                 }
 
                 else -> {
-                    _errorMessage.postValue("Cannot fetch users.")
+                    _getUsersError.postValue("Cannot fetch users.")
                 }
             }
         }
@@ -53,6 +60,24 @@ class UserViewModel(private val userRepository: UserRepository) : ViewModel() {
 
                 else -> {
                     _errorMessage2.postValue("Cannot fetch users.")
+                }
+            }
+        }
+    }
+
+    suspend fun deleteUser(id: String) {
+        viewModelScope.launch {
+            when (val result = userRepository.deleteUser(id)) {
+                is Result.Success -> {
+                    _deletedUser.postValue(result.data)
+                }
+
+                is Result.Error -> {
+                    _deleteError.postValue(result.exception.message)
+                }
+
+                else -> {
+                    _deleteError.postValue("Cannot delete user.")
                 }
             }
         }

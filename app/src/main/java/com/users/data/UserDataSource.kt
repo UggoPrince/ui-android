@@ -1,6 +1,6 @@
 package com.users.data
 
-import android.util.Log
+import com.users.data.model.DeletedUser
 import com.users.data.model.User
 import com.users.service.UserService
 import java.io.IOException
@@ -42,6 +42,15 @@ class UserDataSource(private val apiService: UserService) {
         return try {
             val update = apiService.updateUser(user.id, user)
             Result.Success(update)
+        } catch (e: Throwable) {
+            Result.Error(IOException("Error adding user.", e))
+        }
+    }
+
+    suspend fun deleteUser(id: String): Result<DeletedUser> {
+        return try {
+            val deleted = apiService.deleteUser(id)
+            Result.Success(deleted)
         } catch (e: Throwable) {
             Result.Error(IOException("Error adding user.", e))
         }

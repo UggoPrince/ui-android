@@ -1,7 +1,9 @@
 package com.users.service
 
+import com.users.data.model.DeletedUser
 import com.users.data.model.User
 import retrofit2.http.Body
+import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.PATCH
 import retrofit2.http.POST
@@ -19,4 +21,7 @@ interface UserService {
 
     @PATCH("/api/users/{id}")
     suspend fun updateUser(@Path("id") id: String, @Body user: User): User
+
+    @DELETE("/api/users/{id}")
+    suspend fun deleteUser(@Path("id") id: String): DeletedUser
 }

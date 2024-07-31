@@ -6,9 +6,13 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
+import android.widget.Toast
+import androidx.annotation.StringRes
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.progressindicator.LinearProgressIndicator
 import com.users.R
 import com.users.data.model.User
 import com.users.databinding.ActivityMainBinding
@@ -19,9 +23,10 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
-    private var adapter: Adapter = Adapter { data -> this.onItemClicked(data) }
+    private var adapter: Adapter = Adapter({ data -> this.onItemClicked(data) }, { id -> this.itemDelete(id) })
     private lateinit var recyclerView: RecyclerView
     private val userViewModel: UserViewModel by viewModel()
+    private lateinit var linearProgressIndicator: LinearProgressIndicator
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,6 +37,7 @@ class MainActivity : AppCompatActivity() {
         // setSupportActionBar(binding.toolbar)
         recyclerView = findViewById(R.id.usersRecyclerView)
         recyclerView.layoutManager = LinearLayoutManager(this)
+        linearProgressIndicator = findViewById(R.id.getUsersLoader)
 
         binding.fab.setOnClickListener {
             val intent = Intent(this, AddUserActivity::class.java)
@@ -43,18 +49,43 @@ class MainActivity : AppCompatActivity() {
     // observes viewmodel users property
     private fun observeViewModel() {
         userViewModel.users.observe(this) {
+            hideProgressBar()
             if (it.isNotEmpty()) {
                 adapter.setData(it)
                 recyclerView.adapter = adapter
             }
         }
+        userViewModel.getUsersError.observe(this) {
+            hideProgressBar()
+            showToast(it)
+        }
+        userViewModel.deletedUser.observe(this) {
+            // hideProgressBar()
+            if (it.success) {
+                showToast("User deleted")
+                fetchUsers()
+            }
+        }
+        userViewModel.deleteError.observe(this) {
+            hideProgressBar()
+            showToast(it)
+        }
     }
 
     // fetches users
     private fun fetchUsers() {
+        displayProgressBar()
         lifecycleScope.launch {
             userViewModel.getUsers()
         }
+    }
+
+    private fun displayProgressBar() {
+        linearProgressIndicator.visibility = View.VISIBLE
+    }
+
+    private fun hideProgressBar() {
+        linearProgressIndicator.visibility = View.INVISIBLE
     }
 
     // user item click listener that opens update user activity
@@ -63,6 +94,14 @@ class MainActivity : AppCompatActivity() {
             putExtra("USER", user)
         }
         startActivity(intent)
+    }
+
+    // delete an item
+    private fun itemDelete(id: String) {
+        displayProgressBar()
+        lifecycleScope.launch {
+            userViewModel.deleteUser(id)
+        }
     }
 
     @SuppressLint("NotifyDataSetChanged")
@@ -86,5 +125,9 @@ class MainActivity : AppCompatActivity() {
             R.id.action_settings -> true
             else -> super.onOptionsItemSelected(item)
         }
+    }
+
+    private fun showToast(errorString: String) {
+        Toast.makeText(applicationContext, errorString, Toast.LENGTH_SHORT).show()
     }
 }
