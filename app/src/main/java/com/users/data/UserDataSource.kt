@@ -28,4 +28,22 @@ class UserDataSource(private val apiService: UserService) {
             Result.Error(IOException("Error fetching users.", e))
         }
     }
+
+    suspend fun getUser(id: String): Result<User> {
+        return try {
+            val user = apiService.getUser(id)
+            Result.Success(user)
+        } catch (e: Throwable) {
+            Result.Error(IOException("Error fetching user.", e))
+        }
+    }
+
+    suspend fun updateUser(user: User): Result<User> {
+        return try {
+            val update = apiService.updateUser(user.id, user)
+            Result.Success(update)
+        } catch (e: Throwable) {
+            Result.Error(IOException("Error adding user.", e))
+        }
+    }
 }

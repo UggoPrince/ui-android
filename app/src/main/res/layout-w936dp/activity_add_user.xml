@@ -9,7 +9,7 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context=".ui.adduser.AddUserActivity">
+    tools:context=".ui.add_user.AddUserActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="840dp"
@@ -17,45 +17,86 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
-        <EditText
-            android:id="@+id/username"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/firstnameLayout"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
             android:layout_marginTop="96dp"
-            android:hint="@string/prompt_email"
-            android:inputType="textEmailAddress"
-            android:selectAllOnFocus="true"
+            android:layout_marginEnd="8dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/firstname"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:autofillHints=""
+                android:hint="@string/prompt_firstname"
+                android:inputType="text"
+                android:selectAllOnFocus="true" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <EditText
-            android:id="@+id/password"
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:hint="@string/prompt_password"
-            android:imeActionLabel="@string/action_sign_in_short"
-            android:imeOptions="actionDone"
-            android:inputType="textPassword"
-            android:selectAllOnFocus="true"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/username" />
+            android:layout_marginTop="16dp"
+            android:id="@+id/lastnameLayout"
+            app:layout_constraintEnd_toEndOf="@id/firstnameLayout"
+            app:layout_constraintStart_toStartOf="@id/firstnameLayout"
+            app:layout_constraintTop_toBottomOf="@id/firstnameLayout">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/lastname"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/prompt_lastname"
+                android:inputType="text"
+                android:selectAllOnFocus="true" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <Button
-            android:id="@+id/login"
-            android:layout_width="wrap_content"
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/emailLayout"
+            android:layout_marginTop="16dp"
+            app:layout_constraintEnd_toEndOf="@id/lastnameLayout"
+            app:layout_constraintStart_toStartOf="@id/lastnameLayout"
+            app:layout_constraintTop_toBottomOf="@id/lastnameLayout">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/prompt_email"
+                android:inputType="textEmailAddress"
+                android:selectAllOnFocus="true" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!--    <EditText-->
+        <!--        android:id="@+id/password"-->
+        <!--        android:layout_width="0dp"-->
+        <!--        android:layout_height="wrap_content"-->
+        <!--        android:layout_marginTop="8dp"-->
+        <!--        android:hint="@string/prompt_password"-->
+        <!--        android:imeActionLabel="@string/action_sign_in_short"-->
+        <!--        android:imeOptions="actionDone"-->
+        <!--        android:inputType="textPassword"-->
+        <!--        android:selectAllOnFocus="true"-->
+        <!--        app:layout_constraintEnd_toEndOf="parent"-->
+        <!--        app:layout_constraintStart_toStartOf="parent"-->
+        <!--        app:layout_constraintTop_toBottomOf="@+id/username" />-->
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/addUserButton"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="start"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="32dp"
             android:layout_marginBottom="64dp"
             android:enabled="false"
-            android:text="@string/action_sign_in"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/password"
+            android:text="@string/action_add_user"
+            app:layout_constraintEnd_toEndOf="@id/emailLayout"
+            app:layout_constraintStart_toStartOf="@id/emailLayout"
+            app:layout_constraintTop_toBottomOf="@+id/emailLayout"
             app:layout_constraintVertical_bias="0.2" />
 
         <ProgressBar
@@ -67,9 +108,9 @@
             android:layout_marginBottom="64dp"
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@+id/password"
-            app:layout_constraintStart_toStartOf="@+id/password"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/addUserButton"
+            app:layout_constraintStart_toStartOf="@+id/addUserButton"
+            app:layout_constraintTop_toBottomOf="@id/addUserButton"
             app:layout_constraintVertical_bias="0.3" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

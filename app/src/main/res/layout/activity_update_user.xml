@@ -2,20 +2,20 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/container"
+    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.add_user.AddUserActivity">
+    tools:context=".ui.update_user.UpdateUserActivity">
 
     <LinearLayout
-        android:id="@+id/progressBarLayout"
+        android:id="@+id/updateProgressBarLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
         <com.google.android.material.progressindicator.LinearProgressIndicator
-            android:id="@+id/loading"
+            android:id="@+id/updateProgressBar"
             android:visibility="invisible"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -26,98 +26,83 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:id="@+id/fieldsLayout1"
+        android:id="@+id/fieldsLayout2"
         android:paddingLeft="@dimen/activity_horizontal_margin"
         android:paddingTop="@dimen/activity_vertical_margin"
         android:paddingRight="@dimen/activity_horizontal_margin"
         android:paddingBottom="@dimen/activity_vertical_margin"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/progressBarLayout">
+        app:layout_constraintTop_toBottomOf="@id/updateProgressBarLayout">
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/firstnameLayout"
+            android:id="@+id/updateFirstnameLayout"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="96dp"
+            android:hint="@string/prompt_firstname"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
+
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/firstname"
+                android:id="@+id/updateFirstname"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:autofillHints=""
-                android:hint="@string/prompt_firstname"
-                android:inputType="text"
-                android:selectAllOnFocus="true" />
+                android:layout_height="wrap_content" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/updateLastnameLayout"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:id="@+id/lastnameLayout"
-            app:layout_constraintEnd_toEndOf="@id/firstnameLayout"
-            app:layout_constraintStart_toStartOf="@id/firstnameLayout"
-            app:layout_constraintTop_toBottomOf="@id/firstnameLayout">
+            app:layout_constraintEnd_toEndOf="@id/updateFirstnameLayout"
+            app:layout_constraintStart_toStartOf="@id/updateFirstnameLayout"
+            app:layout_constraintTop_toBottomOf="@id/updateFirstnameLayout">
+
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/lastname"
+                android:id="@+id/updateLastname"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/prompt_lastname"
                 android:inputType="text"
-                android:selectAllOnFocus="true" />
+                android:selectAllOnFocus="false" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/updateEmailLayout"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:id="@+id/emailLayout"
             android:layout_marginTop="16dp"
-            app:layout_constraintEnd_toEndOf="@id/lastnameLayout"
-            app:layout_constraintStart_toStartOf="@id/lastnameLayout"
-            app:layout_constraintTop_toBottomOf="@id/lastnameLayout">
+            app:layout_constraintEnd_toEndOf="@id/updateLastnameLayout"
+            app:layout_constraintStart_toStartOf="@id/updateLastnameLayout"
+            app:layout_constraintTop_toBottomOf="@id/updateLastnameLayout">
+
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/email"
+                android:id="@+id/updateEmail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/prompt_email"
                 android:inputType="textEmailAddress"
-                android:selectAllOnFocus="true" />
+                android:selectAllOnFocus="false" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/addUserButton"
+            android:id="@+id/updateUserButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="start"
             android:layout_marginTop="32dp"
             android:layout_marginBottom="64dp"
-            android:enabled="false"
-            android:text="@string/action_add_user"
+            android:enabled="true"
+            android:text="@string/action_update_user"
+            android:padding="8dp"
             android:textColor="@color/white"
             android:textSize="16sp"
-            app:layout_constraintEnd_toEndOf="@id/emailLayout"
-            app:layout_constraintStart_toStartOf="@id/emailLayout"
-            app:layout_constraintTop_toBottomOf="@+id/emailLayout"
+            app:layout_constraintEnd_toEndOf="@id/updateEmailLayout"
+            app:layout_constraintStart_toStartOf="@id/updateEmailLayout"
+            app:layout_constraintTop_toBottomOf="@+id/updateEmailLayout"
             app:layout_constraintVertical_bias="0.2" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-<!--    <ProgressBar-->
-<!--        android:id="@+id/loading"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_gravity="center"-->
-<!--        android:layout_marginTop="64dp"-->
-<!--        android:layout_marginBottom="64dp"-->
-<!--        android:visibility="gone"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        app:layout_constraintEnd_toEndOf="@+id/addUserButton"-->
-<!--        app:layout_constraintStart_toStartOf="@+id/addUserButton"-->
-<!--        app:layout_constraintTop_toBottomOf="@id/addUserButton"-->
-<!--        app:layout_constraintVertical_bias="0.3" />-->
-
 </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <!--        app:layout_constraintBottom_toBottomOf="parent"-->

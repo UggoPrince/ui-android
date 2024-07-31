@@ -11,4 +11,13 @@ class UserRepository(private val dataSource: UserDataSource) {
     suspend fun getUsers(): Result<List<User>> {
         return dataSource.getUsers()
     }
+
+    suspend fun getUser(id: String): Result<User> {
+        return dataSource.getUser(id)
+    }
+
+    suspend fun updateUser(user: User): Result<User> {
+        val result = dataSource.updateUser(user)
+        return result
+    }
 }

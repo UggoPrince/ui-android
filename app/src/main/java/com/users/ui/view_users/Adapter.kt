@@ -1,6 +1,7 @@
-package com.users.ui.viewusers
+package com.users.ui.view_users
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,7 +10,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.users.R
 import com.users.data.model.User
 
-class Adapter(): RecyclerView.Adapter<Adapter.UserViewHolder>() {
+class Adapter(private val itemClickListener: (User) -> Unit):
+    RecyclerView.Adapter<Adapter.UserViewHolder>() {
     private var users = listOf<User>()
 
     @SuppressLint("NotifyDataSetChanged")
@@ -20,6 +22,10 @@ class Adapter(): RecyclerView.Adapter<Adapter.UserViewHolder>() {
     inner class UserViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val nameView: TextView = itemView.findViewById(R.id.name)
         val emailView: TextView = itemView.findViewById(R.id.userEmail)
+
+        fun setClickListener(user: User) {
+            itemView.setOnClickListener { itemClickListener(user)}
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserViewHolder {
@@ -36,5 +42,6 @@ class Adapter(): RecyclerView.Adapter<Adapter.UserViewHolder>() {
         val name = "${user.firstName} ${user.lastName}"
         holder.nameView.text = name
         holder.emailView.text = user.email
+        holder.setClickListener(user)
     }
 }

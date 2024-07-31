@@ -1,6 +1,7 @@
-package com.users.ui.adduser
+package com.users.ui.add_user
 
 import android.app.Activity
+import android.graphics.Color
 import androidx.lifecycle.Observer
 import android.os.Bundle
 import androidx.annotation.StringRes
@@ -13,12 +14,13 @@ import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
 import com.users.R
 import com.users.databinding.ActivityAddUserBinding
+import com.users.ui.UserView
+import com.users.util.afterTextChanged
 
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class AddUserActivity : AppCompatActivity() {
-
     private val addUserViewModel: AddUserViewModel by viewModel()
     private lateinit var binding: ActivityAddUserBinding
 
@@ -28,15 +30,11 @@ class AddUserActivity : AppCompatActivity() {
         binding = ActivityAddUserBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val email = binding.email!!
-        // val password = binding.password
-        val firstname = binding.firstname!!
-        val lastname = binding.lastname!!
-        val addUserButton = binding.addUserButton!!
+        val email = binding.email
+        val firstname = binding.firstname
+        val lastname = binding.lastname
+        val addUserButton = binding.addUserButton
         val loading = binding.loading
-
-//        userViewModel = ViewModelProvider(this, UserViewModelFactory())
-//            .get(AddUserViewModel::class.java)
 
         addUserViewModel.addUserFormState.observe(this@AddUserActivity, Observer {
             val addUserState = it ?: return@Observer
@@ -54,12 +52,12 @@ class AddUserActivity : AppCompatActivity() {
                 lastname.error = getString(addUserState.lastnameError)
             }
             if (addUserState.isDataValid) {
-                // loading.visibility = View.VISIBLE
+                loading.visibility = View.VISIBLE
                 lifecycleScope.launch {
                     addUserViewModel.addUser(
-                        email.text.toString(),
-                        firstname.text.toString(),
-                        lastname.text.toString()
+                        email.text.toString().trim(),
+                        firstname.text.toString().trim(),
+                        lastname.text.toString().trim()
                     )
                 }
             }
@@ -68,17 +66,16 @@ class AddUserActivity : AppCompatActivity() {
         addUserViewModel.addUserResult.observe(this@AddUserActivity, Observer {
             val addingUserResult = it ?: return@Observer
 
-            loading.visibility = View.GONE
+            loading.visibility = View.INVISIBLE
             if (addingUserResult.error != null) {
-                showLoginFailed(addingUserResult.error)
+                showAddingFailed(addingUserResult.error)
+                addUserButton.isEnabled = true
             }
             if (addingUserResult.success != null) {
                 updateUiWithUser(addingUserResult.success)
+                setResult(Activity.RESULT_OK)
+                finish()
             }
-            setResult(Activity.RESULT_OK)
-
-            //Complete and destroy login activity once successful
-            finish()
         })
 
         email.afterTextChanged {
@@ -115,32 +112,11 @@ class AddUserActivity : AppCompatActivity() {
                 )
             }
         }
-
-//        password.apply {
-//            afterTextChanged {
-//                loginViewModel.loginDataChanged(
-//                    username.text.toString(),
-//                    password.text.toString()
-//                )
-//            }
-//
-//            setOnEditorActionListener { _, actionId, _ ->
-//                when (actionId) {
-//                    EditorInfo.IME_ACTION_DONE ->
-//                        loginViewModel.login(
-//                            username.text.toString(),
-//                            password.text.toString()
-//                        )
-//                }
-//                false
-//            }
-//        }
     }
 
-    private fun updateUiWithUser(model: AddedUserView) {
+    private fun updateUiWithUser(model: UserView) {
         val added = getString(R.string.added)
         val displayName = model.displayName
-        // TODO : initiate successful logged in experience
         Toast.makeText(
             applicationContext,
             "$displayName $added",
@@ -148,22 +124,7 @@ class AddUserActivity : AppCompatActivity() {
         ).show()
     }
 
-    private fun showLoginFailed(@StringRes errorString: Int) {
+    private fun showAddingFailed(@StringRes errorString: Int) {
         Toast.makeText(applicationContext, errorString, Toast.LENGTH_SHORT).show()
     }
-}
-
-/**
- * Extension function to simplify setting an afterTextChanged action to EditText components.
- */
-fun EditText.afterTextChanged(afterTextChanged: (String) -> Unit) {
-    this.addTextChangedListener(object : TextWatcher {
-        override fun afterTextChanged(editable: Editable?) {
-            afterTextChanged.invoke(editable.toString())
-        }
-
-        override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
-
-        override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
-    })
 }

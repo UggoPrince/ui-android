@@ -1,4 +1,4 @@
-package com.users.ui.adduser
+package com.users.ui.add_user
 
 /**
  * Data validation state of the login form.

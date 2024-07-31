@@ -1,16 +1,18 @@
-package com.users.ui.adduser
+package com.users.ui.add_user
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import android.util.Patterns
 import androidx.lifecycle.viewModelScope
 import com.users.data.Result
 
 import com.users.R
 import com.users.data.UserRepository
+import com.users.ui.UserView
 import com.users.ui.UserResult
+import com.users.util.isEmailValid
+import com.users.util.isNameValid
+import com.users.util.isNotEmpty
 import kotlinx.coroutines.launch
 
 class AddUserViewModel(private val userRepository: UserRepository) : ViewModel() {
@@ -28,7 +30,7 @@ class AddUserViewModel(private val userRepository: UserRepository) : ViewModel()
 
             if (result is Result.Success) {
                 _addUserResult.value =
-                    UserResult(success = AddedUserView(displayName = result.data.firstName + ' ' + result.data.lastName))
+                    UserResult(success = UserView(displayName = result.data.firstName + ' ' + result.data.lastName))
             } else {
                 _addUserResult.value = UserResult(error = R.string.adding_user_failed)
             }
@@ -44,7 +46,6 @@ class AddUserViewModel(private val userRepository: UserRepository) : ViewModel()
     }
 
     fun canAddUserCheck(email: String, firstname: String, lastname: String) {
-        Log.d("VALID :", isEmailValid(email).toString())
         if (!isEmailValid(email)) {
             _addUserForm.value = AddUserFormState(emailError = R.string.invalid_email)
         } else if (!isNameValid(firstname)) {
@@ -54,25 +55,5 @@ class AddUserViewModel(private val userRepository: UserRepository) : ViewModel()
         } else {
             _addUserForm.value = AddUserFormState(isDataValid = true)
         }
-    }
-
-    // A placeholder username validation check
-    private fun isEmailValid(email: String): Boolean {
-        return if (email.contains('@')) {
-            Patterns.EMAIL_ADDRESS.matcher(email).matches()
-        } else {
-            false
-            // email.isNotBlank()
-        }
-    }
-
-    // field is not empty validation
-    private fun isNotEmpty(str: String): Boolean {
-        return str.isNotBlank()
-    }
-
-    // A placeholder password validation check
-    private fun isNameValid(name: String): Boolean {
-        return name.length > 2
     }
 }

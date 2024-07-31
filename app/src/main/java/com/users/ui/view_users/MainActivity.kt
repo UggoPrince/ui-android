@@ -1,4 +1,4 @@
-package com.users.ui.viewusers
+package com.users.ui.view_users
 
 import android.annotation.SuppressLint
 import android.content.Intent
@@ -10,14 +10,16 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.users.R
+import com.users.data.model.User
 import com.users.databinding.ActivityMainBinding
-import com.users.ui.adduser.AddUserActivity
+import com.users.ui.add_user.AddUserActivity
+import com.users.ui.update_user.UpdateUserActivity
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
-    private var adapter: Adapter = Adapter()
+    private var adapter: Adapter = Adapter { data -> this.onItemClicked(data) }
     private lateinit var recyclerView: RecyclerView
     private val userViewModel: UserViewModel by viewModel()
 
@@ -27,7 +29,7 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        setSupportActionBar(binding.toolbar)
+        // setSupportActionBar(binding.toolbar)
         recyclerView = findViewById(R.id.usersRecyclerView)
         recyclerView.layoutManager = LinearLayoutManager(this)
 
@@ -38,6 +40,7 @@ class MainActivity : AppCompatActivity() {
         observeViewModel()
     }
 
+    // observes viewmodel users property
     private fun observeViewModel() {
         userViewModel.users.observe(this) {
             if (it.isNotEmpty()) {
@@ -47,10 +50,19 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    // fetches users
     private fun fetchUsers() {
         lifecycleScope.launch {
             userViewModel.getUsers()
         }
+    }
+
+    // user item click listener that opens update user activity
+    private fun onItemClicked(user: User) {
+        val intent = Intent(this, UpdateUserActivity::class.java).apply {
+            putExtra("USER", user)
+        }
+        startActivity(intent)
     }
 
     @SuppressLint("NotifyDataSetChanged")

@@ -7,7 +7,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 val networkModule = module {
     single {
-        val baseUrl = "https://ca70f05cd67d89c2b410.free.beeceptor.com"
+        val baseUrl = "https://u-management.free.beeceptor.com/"
         // val apiService: UserService by lazy {
         val retrofit = Retrofit.Builder()
             .baseUrl(baseUrl)
